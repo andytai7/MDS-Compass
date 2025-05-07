@@ -150,3 +150,53 @@ This project is licensed under the MIT License - see the `LICENSE` file for deta
 - UBC Learning Technology Hub
 - UBC GenAI Toolkit Team
 - Master of Data Science Program
+
+flowchart TD
+    subgraph "User Interface"
+        A[Student] -->|Questions via Slack| B[Slack Integration]
+    end
+    
+    subgraph "MDS Compass Core"
+        B -->|API Request| C[Request Handler]
+        C -->|Query| D[Query Processor]
+        
+        subgraph "RAG Pipeline"
+            D -->|Processed Query| E[Embedding Generator]
+            E -->|Vector Embedding| F[Vector Database]
+            F -->|Retrieved Documents| G[Context Assembler]
+            
+            subgraph "Knowledge Base"
+                KB1[Onboarding Documents]
+                KB2[Technical Setup Guides]
+                KB3[Program Policies]
+            end
+            
+            KB1 -.->|Indexed Content| F
+            KB2 -.->|Indexed Content| F
+            KB3 -.->|Indexed Content| F
+            
+            G -->|Assembled Context| H[LLM Prompt Constructor]
+            H -->|Prompt with Context| I[GPT API]
+            I -->|Generated Response| J[Response Filter]
+        end
+        
+        J -->|Filtered Response| K[Response Handler]
+    end
+    
+    subgraph "Human Oversight"
+        K -->|Selected Interactions| L[Faculty Oversight Channel]
+        L -->|Feedback| C
+    end
+    
+    K -->|Final Response| B
+    B -->|Chatbot Answer| A
+
+    classDef primary fill:#d1e7dd,stroke:#198754,stroke-width:2px
+    classDef secondary fill:#cff4fc,stroke:#0dcaf0,stroke-width:2px
+    classDef tertiary fill:#f8d7da,stroke:#dc3545,stroke-width:2px
+    classDef knowledge fill:#e2e3e5,stroke:#212529,stroke-width:1px
+    
+    class A,B primary
+    class C,D,E,F,G,H,I,J,K secondary
+    class L tertiary
+    class KB1,KB2,KB3 knowledge
