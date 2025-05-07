@@ -151,7 +151,9 @@ This project is licensed under the MIT License - see the `LICENSE` file for deta
 - UBC GenAI Toolkit Team
 - Master of Data Science Program
 
-flowchart TD
+                      
+```mermaid
+flowchart TD;
     subgraph "User Interface"
         A[Student] -->|Questions via Slack| B[Slack Integration]
     end
@@ -200,3 +202,4 @@ flowchart TD
     class C,D,E,F,G,H,I,J,K secondary
     class L tertiary
     class KB1,KB2,KB3 knowledge
+```
