@@ -93,10 +93,11 @@ HUMAN_OVERSIGHT_CHANNEL=mds-compass-oversight
 
 ## Usage
 
-Once deployed, students can interact with MDS Compass in Slack:
+Once deployed, students can interact with MDS Compass in the dedicated public Slack channel:
 
-- Direct message: `@MDS Compass What software do I need to install?`
-- In channels: `@MDS Compass Where can I find the program policies?`
+- In the public channel: `@MDS Compass What software do I need to install?`
+- All interactions are visible to other students and instructors
+- Instructors provide oversight and feedback directly in the same channel
 
 ## Development
 
@@ -118,11 +119,12 @@ npx slack-mock-tester
 
 ## Monitoring and Oversight
 
-Faculty oversight is available through:
+Faculty oversight is built into the system:
 
-1. Real-time monitoring in the `#mds-compass-oversight` Slack channel
-2. Logging dashboard available at `/admin` (requires admin credentials)
-3. Weekly digest reports of common questions and issues
+1. Real-time monitoring in the same public channel where students interact
+2. Instructors can provide corrections or additional information directly in the channel
+3. Logging dashboard available at `/admin` (requires admin credentials)
+4. Weekly digest reports of common questions and issues
 
 ## Privacy and Compliance
 
@@ -150,12 +152,12 @@ This project is licensed under the MIT License - see the `LICENSE` file for deta
 - UBC Learning Technology Hub
 - UBC GenAI Toolkit Team
 - Master of Data Science Program
-
                       
 ```mermaid
 flowchart TD;
     subgraph "User Interface"
-        A[Student] -->|Questions via Slack| B[Slack Integration]
+        A[Students] -->|Questions| B[Public MDS Slack Channel]
+        I1[Instructors] -->|Oversight & Feedback| B
     end
     
     subgraph "MDS Compass Core"
@@ -185,21 +187,16 @@ flowchart TD;
         J -->|Filtered Response| K[Response Handler]
     end
     
-    subgraph "Human Oversight"
-        K -->|Selected Interactions| L[Faculty Oversight Channel]
-        L -->|Feedback| C
-    end
-    
     K -->|Final Response| B
-    B -->|Chatbot Answer| A
+    B -.->|Visible to All| A
+    B -.->|Visible to All| I1
 
     classDef primary fill:#d1e7dd,stroke:#198754,stroke-width:2px
     classDef secondary fill:#cff4fc,stroke:#0dcaf0,stroke-width:2px
     classDef tertiary fill:#f8d7da,stroke:#dc3545,stroke-width:2px
     classDef knowledge fill:#e2e3e5,stroke:#212529,stroke-width:1px
     
-    class A,B primary
+    class A,B,I1 primary
     class C,D,E,F,G,H,I,J,K secondary
-    class L tertiary
     class KB1,KB2,KB3 knowledge
 ```
